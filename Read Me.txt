@@ -119,3 +119,5 @@ wsdl2java.bat -u -o D:\wsdl2java1 -uri http://192-168-56-1:8080/Testmart/Product
 wsdl2java.bat -u -o D:\wsdl2java2 -uri https://192-168-56-1:8181/Testmart/ProductCatalogService?wsdl
 
 wsdl2java.bat -u -o D:\wsdl2java2 -uri https://svn.apache.org/repos/asf/airavata/sandbox/xbaya-web/test/Calculator.wsdl
+
+Thanks :)
