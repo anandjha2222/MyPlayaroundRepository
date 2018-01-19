@@ -1,0 +1,121 @@
+Web Services
+	SOAP (JAX-WS)
+	RESR (JAX-RS)
+	
+Web Site : meant for human consumption
+Web Service : meant for code or applicaton consumption
+
+Example : one application wants to call a method (in general an API) of another application. This can be done with help of WEB SERVICES. So, Web Services allows two different applications running on different servers to talk to each other.
+
+When a web service is created, a contract is shared with it's consumer. This contract is actually an XML which is called Web Service Description Language(WSDL). This contract had to be a language independent thing, so that applications written in any language can understand this contract. XML was the best choice.
+
+WSDL basically contains
+	Operations/methods
+	arguments
+	return type
+	
+So, WSDL is basically an interface that provide an idea about what the web service offers, to the consumer of that web service.
+
+SOAP = Simple Object Access Protocol
+
+Suppose, client application is a java application and web service is a C++ application. Then how will the communicate? This communication happens in XML format. A java application cannot simply serialize it's object and send it to a C++ application as C++ application will not have any idea about a java object. So the java object needs to converted into a SOAP message and this conversion is done by SEI.
+
+SEI = Service Endpoint Interface 
+
+SEI resides at client side. It takes care of conversion of java/c++/python/.net/etc web service call into a SOAP message.
+
+
+Now we will write a java web service client to use an existing web service
+--------------------------------------------------------------------------
+
+There are few web services available online for free, We will be using one.
+		
+		Bank BLZ Service (Bank Sort Codes): https://www.predic8.de/soap/blz-webservice.htm
+		WSDL: http://www.thomas-bayer.com/axis2/services/BLZService?wsdl
+		
+Now we will create a project to test this web service.
+
+some house keeping
+------------------
+
+open cmd
+d:
+cd soap by kaushik
+mkdir sei (service endpoint interface)
+cd sei
+sei> wsimport -keep <endpointurl>                            (this tool comes with j2se) 
+
+About wsimport 
+--------------
+
+Usage: wsimport [options] <WSDL_URI>
+
+where [options] include:
+  -b <path>                 specify jaxws/jaxb binding files or additional schemas (Each <path> must have its own -b)
+  -B<jaxbOption>            Pass this option to JAXB schema compiler
+  -catalog <file>           specify catalog file to resolve external entity references supports TR9401, XCatalog, and OASIS XML Catalog format.
+  -classpath <path>         specify where to find user class files and wsimport
+extensions
+  -cp <path>                specify where to find user class files and wsimport extensions
+  -d <directory>            specify where to place generated output files
+  -encoding <encoding>      specify character encoding used by source files
+  -extension                allow vendor extensions - functionality not specified
+                            by the specification.  Use of extensions may
+                            result in applications that are not portable or
+                            may not interoperate with other implementations
+  -help                     display help
+  -httpproxy:<proxy>        set a HTTP proxy. Format is [user[:password]@]proxyHost:proxyPort (port defaults to 8080)
+  -J<javacOption>           pass this option to javac
+  -keep                     keep generated files
+  -p <pkg>                  specifies the target package
+  -quiet                    suppress wsimport output
+  -s <directory>            specify where to place generated source files
+  -target <version>         generate code as per the given JAXWS spec version
+                            Defaults to 2.2, Accepted values are 2.0, 2.1 and 2.2
+                            e.g. 2.0 will generate compliant code for JAXWS 2.0 spec
+  -verbose                  output messages about what the compiler is doing
+  -version                  print version information
+  -fullversion              print full version information
+  -wsdllocation <location>  @WebServiceClient.wsdlLocation value
+  -clientjar <jarfile>      creates the jar file of the generated artifacts along with the
+                            WSDL metadata required for invoking the web service.
+
+  -generateJWS              generate stubbed JWS implementation file
+  -implDestDir <directory>  specify where to generate JWS implementation file
+  -implServiceName <name>   local portion of service name for generated JWS implementation
+  -implPortName <name>      local portion of port name for generated JWS implementation
+
+Extensions:
+  -XadditionalHeaders              map headers not bound to request or response message to Java method parameters
+  -Xauthfile                       file to carry authorization information in the format
+                                   http://username:password@example.org/stock?wsdl
+  -Xdebug                          print debug information
+  -Xno-addressing-databinding      enable binding of W3C EndpointReferenceType to Java
+  -Xnocompile                      do not compile generated Java files
+  -XdisableAuthenticator           disable Authenticator used by JAX-WS RI,-Xauthfile option will be ignored if set
+  -XdisableSSLHostnameVerification disable the SSL Hostname verification while f
+etching
+                                   wsdls
+
+Examples:
+  wsimport stock.wsdl -b stock.xml -b stock.xjb
+  wsimport -d generated http://example.org/stock?wsdl
+
+eclipse -> BankCodeWS (Project) -> com.anand.ws (package) -> BankCodeWS (class)
+
+	For codes refer eclipse(soap-on desktop)
+	
+NOTE : http://www.thebankcodes.com/blz/   this web site gives BLZ codes of german bank
+
+	
+	
+	
+[server]	http://192-168-56-1:8080/Testmart/ProductCatalogService?wsdl
+[server]	https://192-168-56-1:8181/Testmart/ProductCatalogService?wsdl
+	
+	
+wsdl2java.bat -u -o D:\wsdl2java1 -uri http://192-168-56-1:8080/Testmart/ProductCatalogService?wsdl
+
+wsdl2java.bat -u -o D:\wsdl2java2 -uri https://192-168-56-1:8181/Testmart/ProductCatalogService?wsdl
+
+wsdl2java.bat -u -o D:\wsdl2java2 -uri https://svn.apache.org/repos/asf/airavata/sandbox/xbaya-web/test/Calculator.wsdl
